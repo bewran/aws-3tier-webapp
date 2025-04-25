@@ -13,6 +13,7 @@ A 3-tier architecture web application deployed on AWS with Node.js, MySQL, Docke
 ---
 
 🏗️ Project Architecture Overview
+
 1- Custom VPC with multiple subnets for enhanced security and network separation.
 
 2- Public Subnets:
