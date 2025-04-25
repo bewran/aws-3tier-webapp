@@ -16,12 +16,28 @@ A 3-tier architecture web application deployed on AWS with Node.js, MySQL, Docke
 
 This project sets up a 3-tier architecture web application on AWS:
 
-- **Frontend**: HTML hosted in public subnets
-- **Backend**: Node.js application hosted on private EC2 instances
-- **Database**: MySQL RDS instance in private subnets
-- **Infrastructure as Code**: Terraform used for all AWS resource provisioning
-- **Containerization**: Backend application Dockerized
-- **Automation**: CI/CD pipeline configured using GitHub Actions
+ Project Architecture Overview
+Custom VPC setup with multiple subnets for better security and network separation.
+
+Public Subnets:
+
+Host the Application Load Balancer (ALB).
+
+Host the Node.js Web Servers (EC2 instances).
+
+Private Subnets:
+
+Host the MySQL Database (secured, no direct internet access).
+
+Security Groups configured to control traffic between layers.
+
+Docker used for containerizing the Node.js application.
+
+Terraform automates the entire infrastructure deployment.
+
+High Availability achieved through multi-AZ deployment.
+
+Scalability supported by Auto Scaling Groups behind the Load Balancer
 
 ---
 
