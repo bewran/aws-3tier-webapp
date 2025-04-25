@@ -13,37 +13,22 @@ A 3-tier architecture web application deployed on AWS with Node.js, MySQL, Docke
 ---
 
 🏗️ Project Architecture Overview
-Custom VPC with multiple subnets for enhanced security and network separation.
-
-Public Subnets:
-
-Host the Application Load Balancer (ALB).
-
-Host the Node.js Web Servers (EC2 instances).
-
-Private Subnets:
-
-Host the MySQL Database (secured with no direct internet access).
-
-Security Groups:
-
-Strictly control and filter traffic between the public and private layers.
-
-Docker:
-
-Containerizes the Node.js application for easy deployment and scalability.
-
-Terraform:
-
-Automates the provisioning and configuration of the entire AWS infrastructure.
-
-High Availability:
-
-Achieved through multi-AZ deployment across different Availability Zones.
-
-Scalability:
-
-Enabled by Auto Scaling Groups behind the Application Load Balancer.
+1- Custom VPC with multiple subnets for enhanced security and network separation.
+2- Public Subnets:
+    Host the Application Load Balancer (ALB).
+    Host the Node.js Web Servers (EC2 instances).
+3- Private Subnets:
+    Host the MySQL Database (secured with no direct internet access).
+4- Security Groups:
+    Strictly control and filter traffic between the public and private layers.
+5-Docker:
+    Containerizes the Node.js application for easy deployment and scalability.
+6- Terraform:
+    Automates the provisioning and configuration of the entire AWS infrastructure.
+7-High Availability:
+    Achieved through multi-AZ deployment across different Availability Zones.
+8-Scalability:
+    Enabled by Auto Scaling Groups behind the Application Load Balancer.
 
 ---
 
