@@ -27,3 +27,21 @@ This project sets up a 3-tier architecture web application on AWS:
 
 ## 📂 Project Structure
 
+aws-3tier-webapp/ ├── frontend/ │ └── index.html ├── backend/ │ ├── app.js │ └── Dockerfile ├── terraform/ │ └── main.tf ├── docs/ │ └── aws-3tier-architecture-diagram.png ├── README.md
+---
+
+## 🚀 How to Deploy
+
+1. Clone the repository
+2. Update Terraform variables for your AWS account
+3. Initialize Terraform and apply (`terraform init` → `terraform apply`)
+4. Build and push the Docker image
+5. Deploy the frontend and set up a Load Balancer
+
+---
+
+## 🔗 GitHub Repository Link
+
+[Click here to view the full project on GitHub](https://github.com/bewran/aws-3tier-webapp)
+
+---
