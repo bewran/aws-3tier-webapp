@@ -1,72 +1,65 @@
-# aws-3tier-webapp
-A 3-tier architecture web application deployed on AWS with Node.js, MySQL, Docker, and Terraform.
+# AWS 3-Tier Web Application (work in progress)
 
-# 🚀 AWS 3-Tier Web Application Project
+A portfolio project for developing a secure three-tier AWS architecture using Terraform, Docker, Node.js, and (planned) MySQL.
 
-![AWS](https://img.shields.io/badge/AWS-Cloud-orange)
-![Terraform](https://img.shields.io/badge/Terraform-IaC-blueviolet)
-![Docker](https://img.shields.io/badge/Docker-Containerization-blue)
-![Node.js](https://img.shields.io/badge/Node.js-Backend-green)
-![MySQL](https://img.shields.io/badge/MySQL-Database-lightblue)
-![CI/CD](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-blue)
+> **Status:** The complete three-tier cloud infrastructure is **not yet implemented or deployed**. The current Terraform defines one VPC, one public subnet, an Internet Gateway, and an EC2 instance with a **placeholder AMI**. Do not run `terraform apply` until the configuration and costs are reviewed.
 
----
+## Current repository
 
-🏗️ Project Architecture Overview
+| Component | Status |
+| --- | --- |
+| Frontend | Static HTML prototype in `frontend/index.html` |
+| Backend | Express API in `backend/app.js`; `GET /` and `GET /health` |
+| Docker | Backend Dockerfile and local `compose.yaml` |
+| Terraform | Basic VPC and EC2 example; incomplete and not deployment-ready |
+| CI | GitHub Actions for Node.js tests and Terraform validation, **no AWS deployment** |
+| Database | Planned, **not implemented** |
+| Load balancer, private subnets, Auto Scaling | Planned, **not implemented** |
 
-1- Custom VPC with multiple subnets for enhanced security and network separation.
+## Run the API locally
 
-2- Public Subnets:
-    Host the Application Load Balancer (ALB).
-    Host the Node.js Web Servers (EC2 instances).
-    
-3- Private Subnets:
-    Host the MySQL Database (secured with no direct internet access).
-    
-4- Security Groups:
-    Strictly control and filter traffic between the public and private layers.
-    
-5-Docker:
-    Containerizes the Node.js application for easy deployment and scalability.
-    
-6- Terraform:
-    Automates the provisioning and configuration of the entire AWS infrastructure.
-    
-7-High Availability:
-    Achieved through multi-AZ deployment across different Availability Zones.
-    
-8-Scalability:
-    Enabled by Auto Scaling Groups behind the Application Load Balancer.
+Requires Docker with Compose installed:
 
----
+```bash
+docker compose up --build
+curl http://localhost:3000/health
+docker compose down
+```
 
-## 📂 Project Structure
+The health endpoint returns `{"status":"ok"}`. The sample frontend is static and is **not yet connected** to the API or database.
 
-aws-3tier-webapp/
-├── frontend/
-│   └── index.html
-├── backend/
-│   ├── app.js
-│   └── Dockerfile
-├── terraform/
-│   └── main.tf
-├── docs/
-│   └── aws-3tier-architecture-diagram.png
-├── README.md
----
+Alternatively, with Node.js 22 or later:
 
-## 🚀 How to Deploy
+```bash
+cd backend
+npm install
+npm test
+npm start
+```
 
-1. Clone the repository  git clone https://github.com/bewran/aws-3tier-webapp.git
-2. Update Terraform variables for your AWS account
-3. Initialize Terraform and apply (`terraform init` → `terraform apply`)
-4. Build and push the Docker image
-5. Deploy the frontend and set up a Load Balancer
+## Terraform checks (do not deploy)
 
----
+Install Terraform, then run:
 
-## 🔗 GitHub Repository Link
+```bash
+cd terraform
+terraform fmt -check
+terraform init -backend=false
+terraform validate
+```
 
-[Click here to view the full project on GitHub](https://github.com/bewran/aws-3tier-webapp)
+These commands check formatting/configuration; they do **not** create AWS infrastructure. `terraform init` can download provider plugins but doesn't deploy AWS services when the backend is disabled. **Do not run `terraform apply` or automated deployments without explicit cost approval.**
 
----
+## Planned architecture
+
+- Public web entry: AWS Application Load Balancer spanning public subnets.
+- Application: containerized Node.js service on private compute, with controlled inbound traffic.
+- Data: isolated MySQL database in private subnets.
+- Security: least-privilege IAM, security groups, secrets management, and logging.
+- Reliability: multi-AZ networking and scaling as an *optional* paid implementation.
+
+The full ALB, NAT, compute, and database design can incur ongoing AWS charges even at low traffic. Review budgets and pricing before provisioning.
+
+## Repository
+
+[bewran/aws-3tier-webapp](https://github.com/bewran/aws-3tier-webapp)
