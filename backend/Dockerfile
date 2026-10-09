@@ -1,21 +1,12 @@
-# Use Node.js official image
-FROM node:18
+FROM node:22-alpine
 
-# Set working directory
+ENV NODE_ENV=production
 WORKDIR /usr/src/app
 
-# Copy package files
 COPY package*.json ./
+RUN npm install --omit=dev --no-audit --no-fund && npm cache clean --force
 
-# Install dependencies
-RUN npm install
-
-# Copy app files
-COPY . .
-
-# Expose backend port
+COPY --chown=node:node app.js ./
+USER node
 EXPOSE 3000
-
-# Start server
 CMD ["node", "app.js"]
-

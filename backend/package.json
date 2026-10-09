@@ -1,0 +1,16 @@
+{
+  "name": "aws-3tier-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Node.js API for a three-tier AWS portfolio project",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

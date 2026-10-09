@@ -1,28 +1,30 @@
-provider "aws" {
-  region = "us-west-2"  # Update to your region
-}
+terraform {
+  required_version = ">= 1.6.0"
 
-resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
-}
-
-resource "aws_subnet" "public_subnet" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.1.0/24"
-  map_public_ip_on_launch = true
-}
-
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.main.id
-}
-
-resource "aws_instance" "frontend" {
-  ami           = "ami-0abcdef1234567890"  # Change to correct AMI
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.public_subnet.id
-
-  tags = {
-    Name = "Frontend-Server"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.0, < 7.0"
+    }
   }
 }
 
+provider "aws" {
+  region = var.aws_region
+
+  default_tags {
+    tags = {
+      Project   = "aws-3tier-webapp"
+      ManagedBy = "Terraform"
+    }
+  }
+}
+
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+locals {
+  name = "aws-3tier-demo"
+  azs  = slice(data.aws_availability_zones.available.names, 0, 2)
+}
