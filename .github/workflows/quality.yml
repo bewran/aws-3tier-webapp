@@ -1,0 +1,31 @@
+name: Validate application and Terraform (no AWS deployment)
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+      - run: docker build -t aws-3tier-backend:ci .
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check -recursive
+        working-directory: terraform
+      - run: terraform init -backend=false
+        working-directory: terraform
+      - run: terraform validate
+        working-directory: terraform
